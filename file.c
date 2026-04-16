@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <string.h>
+#include <conio.h>
 
-/* The structure must be defined here so the compiler knows what 'Member' is */
+/* Structure must be identical to the others */
 struct Member {
     char name[50];
     int age;
@@ -9,43 +9,39 @@ struct Member {
     int y, m, d;
 };
 
-int main() {
+void main() {
+    struct Member mem;
     FILE *fp;
-    int i,n = 24, found=0; // Assuming a maximum of 24 members
-    struct Member mem[n];
-    printf("--- Premium Plan Members ---\n\n");
+    int count = 0;
 
-    /* Open the file created by the first partner */
+    clrscr();
+    printf("--- Members Joined After 2025-01-01 ---\n\n");
+
     fp = fopen("gym.txt", "r");
 
     if (fp == NULL) {
-        printf("Error: Could not open gym.txt. Make sure Partner 1 ran their code first!\n");
-    }
-    else {
-        /* Reading the file line by line */
-        for(i = 0; i < n; i++) {
-        fscanf(fp, "%s %d %s %d %d %d", mem[i].name, &mem[i].age, mem[i].plan, &mem[i].y, &mem[i].m, &mem[i].d);
-    }
-        /* The Logic: Compare the member's plan with the word "Premium" */
-        printf("\nName\t\t Age\t\t Plan\t\t Date\n");
-        for(i=0;i<n;i++)
-        {
-            if (strcmp(mem[i].plan, "Premium") == 0) {
-                found=1;
-                printf("%s\t\t",mem[i].name);
-                printf("%d\t\t",mem[i].age);
-                printf("%s\t\t",mem[i].plan);
-                printf("%d-%d-%d\n",mem[i].y,mem[i].m,mem[i].d);    
+        printf("Error: gym.txt not found!\n");
+    } else {
+        /* Reading the file */
+        while (fscanf(fp, "%s %d %s %d-%d-%d", mem.name, &mem.age, mem.plan, &mem.y, &mem.m, &mem.d) != EOF) {
+            
+            /* The Logic: Check if Year > 2025 
+               OR if Year is 2025 and Month/Day is after Jan 1st */
+            if (mem.y > 2025 || (mem.y == 2025 && (mem.m > 1 || (mem.m == 1 && mem.d > 1)))) {
+                printf("Name: %-15s | Joined: %d-%02d-%02d\n", mem.name, mem.y, mem.m, mem.d);
+                count++;
             }
         }
         
-        if (found==0) {
-            printf("\nNo members found with a Premium plan.\n");
+        if (count == 0) {
+            printf("No members found who joined after 2025-01-01.\n");
+        } else {
+            printf("\nTotal found: %d", count);
         }
         
-    fclose(fp);
+        fclose(fp);
     }
 
-    printf("\nPress any key to exit...");
-    return 0;
+    printf("\n\nPress any key to exit...");
+    getch();
 }
