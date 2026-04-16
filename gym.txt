@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Ram 22 Basic 2026-01-15
 Sita 25 Premium 2026-02-10
 Hari 30 Standard 2026-03-05
@@ -22,3 +23,9 @@ Sagar 38 Standard 2026-02-11
 Rita 26 Premium 2026-03-22
 Kamal 29 Basic 2026-04-09
 Laxmi 31 Standard 2026-01-17
+=======
+sita 20 Yearly 2025-1-5
+Hari 22 Monthly 2024-12-30
+Gita 23 Weekly 2025-2-2
+Shyam 25 yearly 2024-12-20
+>>>>>>> origin/new-branch
