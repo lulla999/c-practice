@@ -10,7 +10,7 @@ struct Member {
 };
 
 void main() {
-    struct Member mem;
+    struct Member mem[24];
     FILE *fp;
     int count = 0;
 
@@ -23,12 +23,15 @@ void main() {
         printf("Error: gym.txt not found!\n");
     } else {
         /* Reading the file */
-        while (fscanf(fp, "%s %d %s %d-%d-%d", mem.name, &mem.age, mem.plan, &mem.y, &mem.m, &mem.d) != EOF) {
-            
+        for (int i = 0; i < 24; i++) {
+            if (fscanf(fp, "%s %d %s %d-%d-%d", mem[i].name, &mem[i].age, mem[i].plan, &mem[i].y, &mem[i].m, &mem[i].d) == EOF) {
+                break;
+            }
+
             /* The Logic: Check if Year > 2025 
                OR if Year is 2025 and Month/Day is after Jan 1st */
-            if (mem.y > 2025 || (mem.y == 2025 && (mem.m > 1 || (mem.m == 1 && mem.d > 1)))) {
-                printf("Name: %-15s | Joined: %d-%02d-%02d\n", mem.name, mem.y, mem.m, mem.d);
+            if (mem[i].y > 2025 || (mem[i].y == 2025 && (mem[i].m > 1 || (mem[i].m == 1 && mem[i].d > 1)))) {
+                printf("Name: %-15s | Joined: %d-%02d-%02d\n", mem[i].name, mem[i].y, mem[i].m, mem[i].d);
                 count++;
             }
         }
